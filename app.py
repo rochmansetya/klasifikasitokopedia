@@ -4,11 +4,11 @@ import nltk
 import re
 import string
 
-# Load model
+# Load model (pipeline: vectorizer + classifier)
 with open('model_naive_bayes.pkl', 'rb') as file:
     model = pickle.load(file)
 
-# Contoh fungsi preprocessing (sesuaikan dengan yang kamu pakai saat training)
+# Preprocessing fungsi ringan
 def preprocess_text(text):
     text = str(text).lower()
     text = re.sub(r'\d+', '', text)
@@ -16,16 +16,14 @@ def preprocess_text(text):
     text = text.strip()
     return text
 
-# UI Streamlit
-st.title("Klasifikasi Sentimen Review")
+# UI
+st.title("Klasifikasi Sentimen Review Tokopedia")
 
 user_input = st.text_area("Masukkan review produk:")
 
 if st.button("Prediksi"):
     if user_input:
-        # Preprocessing teks
         clean_text = preprocess_text(user_input)
-        # Model prediksi (harus dalam list atau array)
         prediction = model.predict([clean_text])[0]
         st.success(f"Prediksi Sentimen: {prediction}")
     else:
